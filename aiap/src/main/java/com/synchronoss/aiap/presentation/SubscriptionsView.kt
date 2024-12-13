@@ -20,6 +20,7 @@ fun SubscriptionsView(modifier: Modifier = Modifier) {
     val subscriptionsViewModel = hiltViewModel<SubscriptionsViewModel>()
 
 
+
     runBlocking {
         subscriptionsViewModel.startConnection(
             productIds = listOf(
@@ -29,6 +30,7 @@ fun SubscriptionsView(modifier: Modifier = Modifier) {
         )
     }
     val products: List<ProductDetails>? = subscriptionsViewModel.products
+
     Column(modifier = Modifier.padding(16.dp)) {
         Text("Products", style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(8.dp))
@@ -39,7 +41,7 @@ fun SubscriptionsView(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(4.dp)
                     .clickable {
-
+                        //TODO: Launch Billing Flow Implementation
                     })
             Spacer(modifier = modifier.height(4.dp))
         }

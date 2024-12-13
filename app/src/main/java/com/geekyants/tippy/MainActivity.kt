@@ -1,6 +1,6 @@
 package com.geekyants.tippy
 
-import SubscriptionsView
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -29,11 +29,7 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -48,13 +44,16 @@ import com.geekyants.tippy.ui.theme.Poppins
 import com.geekyants.tippy.ui.theme.Roboto
 import com.geekyants.tippy.ui.theme.TippyTheme
 import dagger.hilt.android.AndroidEntryPoint
+import showSubscriptionsDialog
 
-
+//Implementors need to implement the following annotation
+// in their app and create an application class with the
+// annotation @HiltAndroidApp because the library uses
+// Dagger Hilt for dependency injection
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private var showBottomSheet = mutableStateOf(false)
 
-    @OptIn(ExperimentalMaterial3Api::class)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -72,20 +71,17 @@ class MainActivity : ComponentActivity() {
                     SubscriptionScreen(
                         modifier = Modifier.padding(innerPadding),
                         onClickSubscribe = {
-                            showBottomSheet.value = true
+                            //The following composable comes from the library
+                            showSubscriptionsDialog(
+                                onDismissRequest = {
+                                    //TODO: If the implementor wants to do something on dismissal
+                                }
+                            )
+                            //
                         }
                     )
 
 
-                    if (showBottomSheet.value) {
-
-
-                        ModalBottomSheet(
-                            onDismissRequest = { showBottomSheet.value = false }
-                        ) {
-                            SubscriptionsView()
-                        }
-                    }
                 }
 
 
@@ -95,6 +91,7 @@ class MainActivity : ComponentActivity() {
 
     }
 
+
     private fun makeStatusBarTransparent() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.statusBarColor = androidx.compose.ui.graphics.Color.Transparent.toArgb()
@@ -103,7 +100,10 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun SubscriptionScreen(modifier: Modifier = Modifier, onClickSubscribe: () -> Unit = {}) {
+fun SubscriptionScreen(
+    modifier: Modifier = Modifier,
+    onClickSubscribe: () -> Unit = {}
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -267,7 +267,7 @@ fun SubscriptionScreen(modifier: Modifier = Modifier, onClickSubscribe: () -> Un
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
-                onClick = onClickSubscribe,
+                onClick = { onClickSubscribe() },
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(20.dp),
                 colors = androidx.compose.material3.ButtonDefaults.buttonColors(
                     Color(0xff0D368C),
