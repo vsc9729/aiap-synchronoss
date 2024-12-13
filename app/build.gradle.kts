@@ -17,15 +17,7 @@ android {
         versionCode = 6
         versionName = "1.6"
 
-//        signingConfigs {
-//            create("release") {
-//                keyAlias = "key0"
-//                keyPassword = "Viki@8968"
-//                storeFile = file("/Users/vikrantsingh/AndroidStudioProjects/Tippy/my_keystore.jks")
-//                storePassword = "Viki@8968"
-//            }
-//
-//        }
+
         buildTypes {
             release {
                 isMinifyEnabled = false
@@ -48,6 +40,7 @@ android {
         }
     }
 
+
     dependencies {
         implementation(libs.androidx.core.ktx)
         implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -69,8 +62,7 @@ android {
         implementation(libs.hilt.android)
         kapt(libs.hilt.android.compiler)
         implementation(libs.androidx.hilt.navigation.compose)
-
-        implementation(project(":aiap"))
+        implementation(libs.aiap.synchronoss)
     }
     kapt {
         correctErrorTypes = true
