@@ -42,17 +42,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.lifecycleScope
-import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingClientStateListener
-import com.android.billingclient.api.BillingFlowParams
-import com.android.billingclient.api.Purchase
-import com.android.billingclient.api.PurchasesUpdatedListener
-import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.ProductDetails
-import com.android.billingclient.api.QueryProductDetailsParams
-import com.geekyants.tippy.billingManager.presentation.SubscriptionsViewModel
+
+
 import com.geekyants.tippy.ui.theme.Poppins
 import com.geekyants.tippy.ui.theme.Roboto
 import com.geekyants.tippy.ui.theme.TippyTheme
