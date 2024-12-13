@@ -23,5 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Tippy"
 include(":app")
-include(":aiap-synchronoss")
 include(":aiap")
