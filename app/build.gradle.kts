@@ -62,7 +62,8 @@ android {
         implementation(libs.hilt.android)
         kapt(libs.hilt.android.compiler)
         implementation(libs.androidx.hilt.navigation.compose)
-        implementation(libs.aiap.synchronoss)
+
+        implementation(project(":aiap"))
     }
     kapt {
         correctErrorTypes = true

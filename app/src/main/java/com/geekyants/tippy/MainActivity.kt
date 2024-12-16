@@ -1,6 +1,8 @@
 package com.geekyants.tippy
 
 
+import ShowSubscriptionsDialog
+import SubscriptionsViewDialog
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,6 +31,8 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
@@ -38,13 +42,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 
 
 import com.geekyants.tippy.ui.theme.Poppins
 import com.geekyants.tippy.ui.theme.Roboto
 import com.geekyants.tippy.ui.theme.TippyTheme
+import com.synchronoss.aiap.presentation.SubscriptionsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import showSubscriptionsDialog
 
 //Implementors need to implement the following annotation
 // in their app and create an application class with the
@@ -52,15 +57,12 @@ import showSubscriptionsDialog
 // Dagger Hilt for dependency injection
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         makeStatusBarTransparent()
         setContent {
-
             TippyTheme {
+
                 Scaffold(
                     modifier = Modifier
                         .fillMaxSize()
@@ -68,23 +70,21 @@ class MainActivity : ComponentActivity() {
                             androidx.compose.foundation.layout.WindowInsets.systemBars.asPaddingValues()
                         ), containerColor = Color(0xFFE3EBFC)
                 ) { innerPadding ->
+                    val subscriptionsViewModel: SubscriptionsViewModel =
+                        hiltViewModel<SubscriptionsViewModel>()
                     SubscriptionScreen(
+
                         modifier = Modifier.padding(innerPadding),
                         onClickSubscribe = {
-                            //The following composable comes from the library
-                            showSubscriptionsDialog(
-                                onDismissRequest = {
-                                    //TODO: If the implementor wants to do something on dismissal
-                                }
-                            )
-                            //
+                            subscriptionsViewModel.dialogState.value = true
                         }
                     )
-
-
+                    SubscriptionsViewDialog(
+                        onDismissRequest = {
+                            //TODO: If the implementor wants to do something on dismissal
+                        },
+                    )
                 }
-
-
             }
 
         }
@@ -114,7 +114,6 @@ fun SubscriptionScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
                 text = "Go Premium",
 //            modifier = modifier,
@@ -129,14 +128,12 @@ fun SubscriptionScreen(
             )
             Text(
                 text = "Unlock all the power of this mobile tool and enjoy digital experience like never before!",
-//            modifier = modifier,
                 fontFamily = Poppins,
                 color = Color(0xff0D368C),
                 fontSize = 17.sp,
                 modifier = Modifier.padding(0.dp),
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
-
             Image(
                 painter = painterResource(id = R.drawable.top),
                 contentDescription = "Sample Image",
@@ -146,7 +143,6 @@ fun SubscriptionScreen(
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
-
         ) {
             Box(
                 modifier = Modifier
@@ -158,8 +154,7 @@ fun SubscriptionScreen(
                         2.dp,
                         Color(0xff0D368C),
                         RoundedCornerShape(20.dp),
-
-                        )
+                    )
                     .padding(vertical = 10.dp, horizontal = 20.dp)
 
             ) {

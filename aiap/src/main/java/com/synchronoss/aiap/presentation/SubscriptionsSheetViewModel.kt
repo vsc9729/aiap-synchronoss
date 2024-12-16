@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
@@ -21,7 +22,7 @@ import javax.inject.Inject
 class SubscriptionsViewModel @Inject constructor(
     private val billingManagerUseCases: BillingManagerUseCases
 ) : ViewModel() {
-
+    val dialogState = mutableStateOf(false)
     var products: List<ProductDetails>? by mutableStateOf(null)
 
     suspend fun startConnection(productIds: List<String>) {
