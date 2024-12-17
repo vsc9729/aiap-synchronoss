@@ -21,7 +21,7 @@ import javax.inject.Inject
 class SubscriptionsViewModel @Inject constructor(
     private val billingManagerUseCases: BillingManagerUseCases
 ) : ViewModel() {
-
+    val dialogState = mutableStateOf(false)
     var products: List<ProductDetails>? by mutableStateOf(null)
 
     suspend fun startConnection(productIds: List<String>) {

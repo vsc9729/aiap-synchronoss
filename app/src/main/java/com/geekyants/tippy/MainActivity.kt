@@ -1,6 +1,7 @@
 package com.geekyants.tippy
 
 
+import SubscriptionsViewDialog
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,13 +39,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 
 
 import com.geekyants.tippy.ui.theme.Poppins
 import com.geekyants.tippy.ui.theme.Roboto
 import com.geekyants.tippy.ui.theme.TippyTheme
+import com.synchronoss.aiap.presentation.SubscriptionsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import showSubscriptionsDialog
+
 
 //Implementors need to implement the following annotation
 // in their app and create an application class with the
@@ -52,13 +56,12 @@ import showSubscriptionsDialog
 // Dagger Hilt for dependency injection
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         makeStatusBarTransparent()
         setContent {
+
 
             TippyTheme {
                 Scaffold(
@@ -68,17 +71,20 @@ class MainActivity : ComponentActivity() {
                             androidx.compose.foundation.layout.WindowInsets.systemBars.asPaddingValues()
                         ), containerColor = Color(0xFFE3EBFC)
                 ) { innerPadding ->
+                    val subscriptionsViewModel: SubscriptionsViewModel =
+                        hiltViewModel<SubscriptionsViewModel>()
                     SubscriptionScreen(
                         modifier = Modifier.padding(innerPadding),
                         onClickSubscribe = {
-                            //The following composable comes from the library
-                            showSubscriptionsDialog(
-                                onDismissRequest = {
-                                    //TODO: If the implementor wants to do something on dismissal
-                                }
-                            )
-                            //
+                            subscriptionsViewModel.dialogState.value = true
+
+
                         }
+                    )
+                    SubscriptionsViewDialog(
+                        onDismissRequest = {
+                            //TODO: If the implementor wants to do something on dismissal
+                        },
                     )
 
 
