@@ -18,6 +18,17 @@ android {
         versionName = "1.6"
 
 
+
+
+        signingConfigs {
+            create("release") {
+                storeFile = file("my_keystore.jks")
+                storePassword = "Viki@8968"
+                keyAlias = "key0"
+                keyPassword = "Viki@8968"
+            }
+        }
+
         buildTypes {
             release {
                 isMinifyEnabled = false
@@ -25,7 +36,7 @@ android {
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
                 )
-//                signingConfig = signingConfigs.getByName("release")
+                signingConfig = signingConfigs.getByName("release")
             }
         }
         compileOptions {
