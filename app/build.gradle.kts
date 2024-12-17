@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -22,10 +25,10 @@ android {
 
         signingConfigs {
             create("release") {
-                storeFile = file("my_keystore.jks")
-                storePassword = "Viki@8968"
-                keyAlias = "key0"
-                keyPassword = "Viki@8968"
+                storeFile = file("keystore.jks")
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
             }
         }
 
